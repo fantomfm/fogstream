@@ -1,0 +1,17 @@
+.form-center {
+  width:30%; 
+  margin:0 auto;
+}
+
+.pagination .page-link {
+    color: #198754;
+}
+
+.pagination .active .page-link {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
+}
