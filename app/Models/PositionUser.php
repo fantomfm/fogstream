@@ -5,9 +5,17 @@ namespace App\Models;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserDepartment extends Model
+class PositionUser extends Model
 {
     // use HasFactory;
+
+    /**
+     * The database table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'position_user';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -15,7 +23,7 @@ class UserDepartment extends Model
      */
     protected $fillable = [
         'user_id',
-        'department_id',
+        'position_id',
         'status',
     ];
 
@@ -23,7 +31,7 @@ class UserDepartment extends Model
         $this->belongsTo(User::class);
     }
 
-    public function department(){
-        $this->belongsTo(Department::class);
+    public function position(){
+        $this->belongsTo(Position::class);
     }
 }

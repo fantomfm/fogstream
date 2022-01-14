@@ -17,7 +17,7 @@ class Position extends Model
         'position',
     ];
 
-    public function userPositions(){
-        $this->hasMany(UserPosition::class);
+    public function positionUser(){
+        $this->hasMany(PositionUser::class);
     }
 }

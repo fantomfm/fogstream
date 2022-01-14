@@ -17,7 +17,7 @@ class Department extends Model
         'department',
     ];
 
-    public function userDepartments(){
-        $this->hasMany(UserDepartment::class);
+    public function departmentUser(){
+        $this->hasMany(DepartmentUser::class);
     }
 }

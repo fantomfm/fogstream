@@ -25,7 +25,17 @@ class RegistrationController extends Controller
             ]);
         }
 
-        $user = User::create($validateFields);
+        $user = User::create($validateFields, [
+            'role_id' => 2,
+        ]);
+
+        $user->positionUser()->create([
+            'position_id' => 1,
+        ]);
+
+        $user->departmentUser()->create([
+            'department_id' => 1,
+        ]);
 
         if($user){
             Auth::login($user);

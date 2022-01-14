@@ -5,9 +5,17 @@ namespace App\Models;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserPicture extends Model
+class DepartmentUser extends Model
 {
     // use HasFactory;
+    
+    /**
+     * The database table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'department_user';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -15,14 +23,15 @@ class UserPicture extends Model
      */
     protected $fillable = [
         'user_id',
-        'picture_id',
+        'department_id',
+        'status',
     ];
 
     public function user(){
         $this->belongsTo(User::class);
     }
 
-    public function picture(){
-        $this->belongsTo(Picture::class);
+    public function department(){
+        $this->belongsTo(Department::class);
     }
 }

@@ -5,6 +5,8 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DestroyController;
+use App\Http\Controllers\UpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,12 @@ Route::get('/', [ MainController::class, 'home' ])->name('home');
 
 Route::name('user.')->group(function(){
     Route::get('/users', [ UserController::class, 'users' ])->middleware( middleware: 'auth')->name('users');
-    // Route::view('/users', 'users')->middleware( middleware: 'auth')->name('users');
+
+    Route::get('/users/{id}', [ UserController::class, 'show' ])->middleware( middleware: 'auth')->name('show');
+
+    Route::get('/users/delete/{id}', [ DestroyController::class, 'delete' ])->middleware( middleware: 'auth')->name('delete');
+
+    Route::get('/users/update/{id}', [ UpdateController::class, 'form' ])->middleware( middleware: 'auth')->name('update');
 
     Route::get('/login', function(){
         if(Auth::check()){
@@ -45,4 +52,6 @@ Route::name('user.')->group(function(){
     })->name('registration');
 
     Route::post('/registration', [ RegistrationController::class, 'save' ]);
+
+    Route::post('/users/update/{id}', [ UpdateController::class, 'update' ])->middleware( middleware: 'auth');
 });

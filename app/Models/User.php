@@ -43,19 +43,27 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function getRole(){
-        return $this->role->role;
+    public function positionUser(){
+        return $this->hasMany(PositionUser::class);
     }
 
-    public function userPositions(){
-        return $this->hasMany(UserPosition::class);
+    public function departmentUser(){
+        return $this->hasMany(DepartmentUser::class);
     }
 
-    public function userDepartments(){
-        return $this->hasMany(UserDepartment::class);
+    public function PictureUser(){
+        return $this->hasMany(PictureUser::class);
     }
 
-    public function userPictures(){
-        return $this->hasMany(UserPicture::class);
+    public function positions(){
+        return $this->belongsToMany(Position::class)->where('status', 1);
+    }
+
+    public function departments(){
+        return $this->belongsToMany(Department::class)->where('status', 1);
+    }
+
+    public function pictures(){
+        return $this->belongsToMany(Picture::class)->orderByDesc('updated_at')->limit(1);
     }
 }

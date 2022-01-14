@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserPicturesTable extends Migration
+class CreateDepartmentUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateUserPicturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_pictures', function (Blueprint $table) {
+        Schema::create('department_user', function (Blueprint $table) {
             $table->id();
+            $table->boolean('status')->default(1);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('picture_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('department_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateUserPicturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_picture');
+        Schema::dropIfExists('department_user');
     }
 }

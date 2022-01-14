@@ -17,7 +17,7 @@ class Picture extends Model
         'path',
     ];
 
-    public function userPictures(){
-        $this->hasMany(UserPicture::class);
+    public function pictureUser(){
+        $this->hasMany(PictureUser::class);
     }
 }

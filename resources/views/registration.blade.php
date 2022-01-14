@@ -25,7 +25,7 @@
         <label for="password" class="form-label">Пароль</label>
         <input type="password" class="form-control mb-2" id="password" name="password">
         <label for="password_confirmation" class="form-label">Подтвердите пароль</label>
-        <input type="password_confirmation" class="form-control" id="password_confirmation" name="password_confirmation">
+        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
         @error('password')
         <p class="text-danger">{{ $message }}</p>
         @enderror
