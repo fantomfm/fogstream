@@ -16,11 +16,31 @@
     </div>
     <div class="mb-3">
         <div class="form-group">
-            <label>Должность</label>
-            <select class="form-control input-sm" name="category_id">
+            <label for="role" class="form-label">Роль</label>
+            <select class="form-control" id="role" name="role">
+                @foreach ($rolesAll as $role)
+                    @if ($role->id == $user->role_id)
+                        <option value="{{ $role->id }}" selected>{{ $role->role }}</option>
+                    @else
+                        <option value="{{ $role->id }}">{{ $role->role }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+        @error('role')
+        <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
+    <div class="mb-3">
+        <div class="form-group">
+            <label for="position" class="form-label">Должность</label>
+            <select class="form-control" id="position" name="position">
                 @foreach ($positionsAll as $position)
-                    
-                        <option value="{{ $position->id }}" active>{{ $position->position }}</option>
+                    @if (in_array($position->id, array_column($positionUser->toArray(),'position_id')))
+                        <option value="{{ $position->id }}" selected>{{ $position->position }}</option>
+                    @else
+                        <option value="{{ $position->id }}">{{ $position->position }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
@@ -28,9 +48,26 @@
         <p class="text-danger">{{ $message }}</p>
         @enderror
     </div>
+    <div class="mb-3">
+        <div class="form-group">
+            <label for="departments" class="form-label">Отдел</label>
+            <select class="form-control" multiple id="departments" name="departments[]">
+                @foreach ($departmentsAll as $department)
+                    @if (in_array($department->id, array_column($departmentUser->toArray(),'department_id')))
+                        <option value="{{ $department->id }}" selected>{{ $department->department }}</option>
+                    @else
+                        <option value="{{ $department->id }}">{{ $department->department }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+        @error('departments')
+        <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
     @error('formError')
     <p class="text-danger">{{ $message }}</p>
     @enderror
-    <button class="btn btn-success" type="submit" name="send" value="1">Изменить</button>
+    <button class="btn btn-success" type="submit" name="send" value="1">Сохранить</button>
 </form>
 @endsection

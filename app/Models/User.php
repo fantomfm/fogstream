@@ -44,11 +44,11 @@ class User extends Authenticatable
     }
 
     public function positionUser(){
-        return $this->hasMany(PositionUser::class);
+        return $this->hasMany(PositionUser::class)->where('status', 1);
     }
 
     public function departmentUser(){
-        return $this->hasMany(DepartmentUser::class);
+        return $this->hasMany(DepartmentUser::class)->where('status', 1);
     }
 
     public function PictureUser(){
