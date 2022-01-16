@@ -24,7 +24,11 @@
                     @foreach ($users as $user)
                         <tr class="align-middle text-start">
                             <td>{{ (($users->currentPage() - 1 ) * $users->perPage() ) + $loop->iteration }}</td>
-                            <td>{{ implode(', ',array_column($user->pictures->toArray(),'path')) }}</td>
+                            <td>
+                                @if ($picture = array_column($user->getLastPicture->toArray(),'path'))
+                                    <img src="/storage/img/{{ implode(', ', $picture) }}" width="70"  class="rounded">
+                                @endif
+                            </td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->user }}</td>
                             <td>{{ implode(', ',array_column($user->positions->toArray(),'position')) }}</td>

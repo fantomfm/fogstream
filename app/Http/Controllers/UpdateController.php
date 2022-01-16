@@ -8,16 +8,12 @@ use App\Models\Role;
 use App\Models\Department;
 use App\Models\DepartmentUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateController extends Controller
 {
     public function form($id) {
         $user = User::findOrFail($id);
-
-        $positionUser = $user->positionUser;
-        $departmentUser = $user->departmentUser;
-        $role = $user->role;
-        $pictures = $user->pictures;
 
         $rolesAll = Role::get();
         $positionsAll = Position::get();
@@ -25,10 +21,6 @@ class UpdateController extends Controller
 
         return view('update', [
             'user' => $user,
-            'positionUser' => $positionUser,
-            'departmentUser' => $departmentUser,
-            'role' => $role,
-            'pictures' => $pictures,
             'rolesAll' => $rolesAll,
             'positionsAll' => $positionsAll,
             'departmentsAll' => $departmentsAll,
@@ -42,18 +34,14 @@ class UpdateController extends Controller
             'role' => ['required'],
             'position' => ['required'],
             'departments' => ['required'],
+            'image' => ['image', 'mimetypes:image/jpeg,image/png'],
         ]);
 
         $user = User::findOrFail($id);
 
         $newDepartment = new DepartmentUser;
 
-        $positions = $user->positions;
-        $positionUser = $user->positionUser;
-        $departmentUser = $user->departmentUser;
-        $departments = $user->departments;
-        $role = $user->role;
-        $pictures = $user->pictures;
+        $pictures = $user->pictures();
 
         if ($user->name != $request->name)
             $user->update(['name' => $request->name]);
@@ -61,7 +49,7 @@ class UpdateController extends Controller
         if ($user->role_id != $request->role)
             $user->update(['role_id' => $request->role]);
 
-        foreach ($positionUser as $item) {
+        foreach ($user->positionUser as $item) {
             if ($item->position_id != $request->position) {
                 $item->update(['status' => 0]);
                 $item->create([
@@ -70,27 +58,40 @@ class UpdateController extends Controller
                 ]);
             }
         }
-
-        $array_dep = array_column($departmentUser->toArray(),'department_id');
         
         $arrDep = $request->departments;
 
-        $arrNew = [];
-
-        foreach ($departmentUser as $item) {
+        foreach ($user->departmentUser as $item) {
             $key = array_search($item->department_id, $arrDep);
             if ($key === false) {
                 $item->update(['status' => 0]);
             } else {
-                $arrNew[] = $key;
+                unset($arrDep[$key]);
             }
         }
 
         foreach ($arrDep as $key => $department) {
-            if (!in_array($key, $arrNew)) {
-                $newDepartment->create([
-                    'user_id' => $user->id,
-                    'department_id' => $department,
+            $newDepartment->create([
+                'user_id' => $user->id,
+                'department_id' => $department,
+            ]);
+        }
+
+        if ($request->has('image')) {
+
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $folder = 'public/img';         
+            
+            if(in_array($filename, array_column($user->pictures->toArray(),'path'))) {
+                return redirect(route('user.update', $user->id))->withErrors([
+                    'image' => 'Изображение с таким именем уже существует'
+                ]);
+            }
+            
+            if (Storage::putFileAs($folder, $file, $filename)) {
+                $pictures->create([
+                    'path' => $filename,
                 ]);
             }
         }

@@ -64,6 +64,11 @@ class User extends Authenticatable
     }
 
     public function pictures(){
-        return $this->belongsToMany(Picture::class)->orderByDesc('updated_at')->limit(1);
+        return $this->belongsToMany(Picture::class)->withTimestamps();
+    }
+
+    public function getLastPicture(){
+        if ($this->pictures())
+            return $this->pictures()->orderByDesc('updated_at')->limit(1);
     }
 }

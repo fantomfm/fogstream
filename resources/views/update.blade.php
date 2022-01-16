@@ -5,8 +5,23 @@
 @section('content')
 <h3>Изменить данные пользователя {{ $user->name }}</h3>
 
-<form class="text-start mt-5 form-center" method="post" action="{{ route('user.update', $user->id) }}">
+<form class="text-start mt-5 form-center" method="post" enctype="multipart/form-data" action="{{ route('user.update', $user->id) }}">
     @csrf
+    <div class="mb-3">
+        @foreach ($user->pictures as $picture)
+            @if ($picture->path)
+                <div>
+                    <img src="/storage/img/{{ implode(', ', array_column($user->pictures->toArray(),'path')) }}" width="200"  class="rounded">
+                </div>
+            @endif
+        @endforeach
+        <label for="image" class="form-label">Фото пользователя</label>
+        <input type="file" class="form-control" id="image" name="image">
+        <p>Только jpg, png. Размер не больше 2 Мб.</p>
+        @error('image')
+        <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
     <div class="mb-3">
         <label for="name" class="form-label">Имя пользователя</label>
         <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
@@ -36,7 +51,7 @@
             <label for="position" class="form-label">Должность</label>
             <select class="form-control" id="position" name="position">
                 @foreach ($positionsAll as $position)
-                    @if (in_array($position->id, array_column($positionUser->toArray(),'position_id')))
+                    @if (in_array($position->id, array_column($user->positions->toArray(),'id')))
                         <option value="{{ $position->id }}" selected>{{ $position->position }}</option>
                     @else
                         <option value="{{ $position->id }}">{{ $position->position }}</option>
@@ -53,7 +68,7 @@
             <label for="departments" class="form-label">Отдел</label>
             <select class="form-control" multiple id="departments" name="departments[]">
                 @foreach ($departmentsAll as $department)
-                    @if (in_array($department->id, array_column($departmentUser->toArray(),'department_id')))
+                    @if (in_array($department->id, array_column($user->departments->toArray(),'id')))
                         <option value="{{ $department->id }}" selected>{{ $department->department }}</option>
                     @else
                         <option value="{{ $department->id }}">{{ $department->department }}</option>
