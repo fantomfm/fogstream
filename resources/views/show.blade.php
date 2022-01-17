@@ -44,6 +44,7 @@
             @can('update', $user)
             <a href="{{ route('user.update', $user->id) }}" class="btn btn-success">Изменить</a>
             @endcan
+            <a href="{{ route('user.users') }}" class="btn btn-warning">К списку</a>
         </div>
     </div>
 @endsection

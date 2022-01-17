@@ -89,21 +89,22 @@ class UpdateController extends Controller
 
             $file = $request->file('image');
             $filename = $file->getClientOriginalName();
+            $newname = $user->user . $filename;
             $folder = 'public/img';         
             
-            if(in_array($filename, array_column($user->pictures->toArray(),'path'))) {
+            if(in_array($newname, array_column($user->pictures->toArray(),'path'))) {
                 return redirect(route('user.update', $user->id))->withErrors([
                     'image' => 'Изображение с таким именем уже существует'
                 ]);
             }
             
-            if (Storage::putFileAs($folder, $file, $filename)) {
+            if (Storage::putFileAs($folder, $file, $newname)) {
                 $pictures->create([
-                    'path' => $filename,
+                    'path' => $newname,
                 ]);
             }
         }
 
-        return redirect(route('user.users'));
+        return redirect(route('user.show', $user->id));
     }
 }

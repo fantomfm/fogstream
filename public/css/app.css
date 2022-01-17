@@ -23,3 +23,15 @@
 .card-user {
     max-width: 900px;
 }
+
+.nav-item p {
+    padding: 0.5rem 1rem;
+}
+
+select option:focus {
+    background-color: rgba(25, 135, 84);
+}
+
+select option:checked {
+    background-color: rgba(25, 135, 84, 0.384);
+}

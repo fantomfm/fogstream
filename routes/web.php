@@ -24,6 +24,8 @@ Route::get('/', [ MainController::class, 'home' ])->name('home');
 Route::name('user.')->group(function(){
     Route::get('/users', [ UserController::class, 'users' ])->middleware( middleware: 'auth')->name('users');
 
+    Route::post('/users', [ UserController::class, 'search' ])->middleware( middleware: 'auth');
+
     Route::get('/users/{id}', [ UserController::class, 'show' ])->middleware( middleware: 'auth')->name('show');
 
     Route::get('/users/delete/{id}', [ DestroyController::class, 'delete' ])->middleware( middleware: 'auth')->name('delete');

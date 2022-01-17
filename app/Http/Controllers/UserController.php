@@ -17,6 +17,22 @@ class UserController extends Controller
         ]);
     }
 
+    public function search(Request $request) {
+        
+        $validateFields = $request->validate([
+            'search' => ['string'],
+        ]);
+
+        dd($validateFields);
+
+        $users = User::where('name', 'LIKE', "%{$validateFields['search']}%")->paginate(1);
+
+        return view('users', [
+            'users' => $users,
+        ]);
+
+    }
+
     public function show($id) {
         
         $user = User::findOrFail($id);

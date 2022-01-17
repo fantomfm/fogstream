@@ -91,5 +91,6 @@
     <p class="text-danger">{{ $message }}</p>
     @enderror
     <button class="btn btn-success" type="submit" name="send" value="1">Сохранить</button>
+    <a href="{{ route('user.show', $user->id) }}" class="btn btn-warning">Назад</a>
 </form>
 @endsection

@@ -15,7 +15,7 @@ class DestroyController extends Controller
 
         $user = User::findOrFail($id);
 
-        if (count($user->pictures->toArray()) > 0) {
+        if (count($user->pictures->toArray())) {
             foreach ($user->pictures as $picture) {
                 Storage::disk('public')->delete('img/' . $picture->path);
             }
@@ -33,7 +33,7 @@ class DestroyController extends Controller
 
         Gate::authorize('update', $user);
 
-        if (count($user->getLastPicture->toArray()) > 0) {
+        if (count($user->getLastPicture->toArray())) {
             foreach ($user->getLastPicture as $picture) {
                 Storage::disk('public')->delete('img/' . $picture->path);
                 $delete = $picture->delete();
