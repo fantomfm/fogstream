@@ -8,10 +8,13 @@
 <form class="text-start mt-5 form-center" method="post" enctype="multipart/form-data" action="{{ route('user.update', $user->id) }}">
     @csrf
     <div class="mb-3">
-        @foreach ($user->pictures as $picture)
+        @foreach ($user->getLastPicture as $picture)
             @if ($picture->path)
-                <div>
-                    <img src="/storage/img/{{ implode(', ', array_column($user->pictures->toArray(),'path')) }}" width="200"  class="rounded">
+                <div class ="d-flex">
+                    <div><img src="/storage/img/{{ implode(', ', array_column($user->getLastPicture->toArray(),'path')) }}" width="200"  class="rounded"></div>
+                    @can('update', $user)
+                    <div class="mt-auto ms-3"><a href="{{ route('user.deleteImage', $user->id) }}" class="btn btn-danger">Удалить фото</a></div>
+                    @endcan
                 </div>
             @endif
         @endforeach
@@ -29,6 +32,7 @@
         <p class="text-danger">{{ $message }}</p>
         @enderror
     </div>
+    @can('isAdmin')
     <div class="mb-3">
         <div class="form-group">
             <label for="role" class="form-label">Роль</label>
@@ -46,6 +50,8 @@
         <p class="text-danger">{{ $message }}</p>
         @enderror
     </div>
+    @endcan
+    @can('update')
     <div class="mb-3">
         <div class="form-group">
             <label for="position" class="form-label">Должность</label>
@@ -80,6 +86,7 @@
         <p class="text-danger">{{ $message }}</p>
         @enderror
     </div>
+    @endcan
     @error('formError')
     <p class="text-danger">{{ $message }}</p>
     @enderror

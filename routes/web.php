@@ -28,6 +28,8 @@ Route::name('user.')->group(function(){
 
     Route::get('/users/delete/{id}', [ DestroyController::class, 'delete' ])->middleware( middleware: 'auth')->name('delete');
 
+    Route::get('/users/deleteImage/{id}', [ DestroyController::class, 'deleteImage' ])->middleware( middleware: 'auth')->name('deleteImage');
+
     Route::get('/users/update/{id}', [ UpdateController::class, 'form' ])->middleware( middleware: 'auth')->name('update');
 
     Route::get('/login', function(){

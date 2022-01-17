@@ -38,8 +38,12 @@
                     </tr>
                 </tbody>
             </table>
+            @can('isAdmin')
             <a href="{{ route('user.delete', $user->id) }}" class="btn btn-danger">Удалить</a>
+            @endcan
+            @can('update', $user)
             <a href="{{ route('user.update', $user->id) }}" class="btn btn-success">Изменить</a>
+            @endcan
         </div>
     </div>
 @endsection
