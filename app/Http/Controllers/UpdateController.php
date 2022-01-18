@@ -35,13 +35,14 @@ class UpdateController extends Controller
 
         $validateFields = $request->validate([
             'name' => ['required', 'string'],
-            // 'role' => ['required'],
-            // 'position' => ['required'],
-            // 'departments' => ['required'],
+            'user' => ['required', 'string'],
             'image' => ['image', 'mimetypes:image/jpeg,image/png'],
         ]);
 
         $user = User::findOrFail($id);
+
+        $positionsAll = Position::get();
+        $departmentsAll = Department::get();
 
         Gate::authorize('update', $user);
 
@@ -51,26 +52,44 @@ class UpdateController extends Controller
 
         if ($user->name != $request->name)
             $user->update(['name' => $request->name]);
+
+        if ($user->user != $request->user) {
+            if(User::where('user', $validateFields['user'])->exists()){
+                return redirect(route('user.update', $user->id))->withErrors([
+                    'user' => 'Такой пользователь уже существует'
+                ]);
+            }
+
+            $user->update(['user' => $request->user]);
+        }
         
         if ($request->role && $user->role_id != $request->role)
             $user->update(['role_id' => $request->role]);
 
         if ($position = $request->position) {
-            foreach ($user->positionUser as $item) {
-                if ($item->position_id != $position) {
-                    $item->update(['status' => 0]);
-                    $item->create([
-                        'user_id' => $user->id,
-                        'position_id' => $position,
-                    ]);
+            if (in_array($position, array_column($positionsAll->toArray(),'id'))) {
+                foreach ($user->positionUser as $item) {
+                    if ($item->position_id != $position) {
+                        $item->update(['status' => 0]);
+                        $item->create([
+                            'user_id' => $user->id,
+                            'position_id' => $position,
+                        ]);
+                    }
                 }
             }
         }
-        
+
         if ($arrDep = $request->departments) {
+
+            foreach ($arrDep as $key => $dep) {
+                if (!in_array($dep, array_column($departmentsAll->toArray(),'id')))
+                    unset($arrDep[$key]);
+            }
+
             foreach ($user->departmentUser as $item) {
                 $key = array_search($item->department_id, $arrDep);
-                if ($key === false) {
+                if ($arrDep && $key === false) {
                     $item->update(['status' => 0]);
                 } else {
                     unset($arrDep[$key]);

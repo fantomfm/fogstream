@@ -19,12 +19,11 @@ class DestroyController extends Controller
             foreach ($user->pictures as $picture) {
                 Storage::disk('public')->delete('img/' . $picture->path);
             }
+            $user->pictures()->delete();
         }
-
-        if ($user->pictures()->delete()) {
-            if ($user->delete())
-                return redirect(route('user.users'));
-        }
+        
+        if ($user->delete())
+            return redirect(route('user.users'));
     }
 
     public function deleteImage($id) {

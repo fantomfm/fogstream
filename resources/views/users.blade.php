@@ -6,10 +6,14 @@
     <h1 class="mt-5">Пользователи системы</h1>
 
     <div class="container-fluid table-responsive">
-        <form class="d-flex navbar-brand mb-3" method="post" action="{{ route('user.users') }}">
-            <input class="form-control me-2" id="search" name="search" type="search" placeholder="Поиск" aria-label="Search">
+        <form class="d-flex navbar-brand mb-3" method="GET" action="{{ route('user.users') }}">
+            @csrf
+            <input class="form-control me-2" id="search" name="search" type="search" placeholder="Поиск" value="{{ old('search') }}">
             <button class="btn btn-outline-success" type="submit">Найти</button>
         </form>
+        @error('search')
+            <p class="text-danger text-start">{{ $message }}</p>
+        @enderror
     @if(count($users))
         <table class="table table-striped caption-top table-dark">
             <thead>
@@ -43,7 +47,7 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $users->onEachSide(5)->appends(['search' => request()->search])->links() }}
+        {{ $users->onEachSide(5)->links() }}
     @else
         <p class="text-warning">Данные не найдены!</p>
     @endif

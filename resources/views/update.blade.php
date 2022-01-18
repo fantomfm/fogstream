@@ -32,6 +32,13 @@
         <p class="text-danger">{{ $message }}</p>
         @enderror
     </div>
+    <div class="mb-3">
+        <label for="user" class="form-label">Логин пользователя</label>
+        <input type="text" class="form-control" id="user" name="user" value="{{ $user->user }}">
+        @error('user')
+        <p class="text-danger">{{ $message }}</p>
+        @enderror
+    </div>
     @can('isAdmin')
     <div class="mb-3">
         <div class="form-group">

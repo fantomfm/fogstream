@@ -37,19 +37,19 @@ class TablesSeeder extends Seeder
         foreach (self::$roles as $role) {
             DB::table('roles')->insert([
                 'role' => $role,
-            ]);
+            ])->timestamps();
         }
 
         foreach (self::$positions as $position) {
             DB::table('positions')->insert([
                 'position' => $position,
-            ]);
+            ])->timestamps();
         }
 
         foreach (self::$departments as $department) {
             DB::table('departments')->insert([
                 'department' => $department,
-            ]);
+            ])->timestamps();
         }
 
         DB::table('users')->insert([
@@ -57,6 +57,6 @@ class TablesSeeder extends Seeder
             'user' => 'admin',
             'password' => Hash::make('admin'),
             'role_id' => 1,
-        ]);
+        ])->timestamps();
     }
 }

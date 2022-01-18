@@ -13,17 +13,13 @@ class RegistrationController extends Controller
             return redirect(route('user.users'));
         }
 
+        $request->flash();
+
         $validateFields = $request->validate([
             'name' => ['required', 'string'],
-            'user' => ['required', 'string'],
+            'user' => ['required', 'string', 'unique:users'],
             'password' => ['required', 'confirmed'],
         ]);
-
-        if(User::where('user', $validateFields['user'])->exists()){
-            return redirect(route('user.registration'))->withErrors([
-                'user' => 'Такой пользователь уже существует'
-            ]);
-        }
 
         $user = User::create($validateFields, [
             'role_id' => 2,

@@ -24,7 +24,9 @@ Route::get('/', [ MainController::class, 'home' ])->name('home');
 Route::name('user.')->group(function(){
     Route::get('/users', [ UserController::class, 'users' ])->middleware( middleware: 'auth')->name('users');
 
-    Route::post('/users', [ UserController::class, 'search' ])->middleware( middleware: 'auth');
+    // Route::post('/users', [ UserController::class, 'search' ])->middleware( middleware: 'auth');
+
+    // Route::get('/users/search', [ UserController::class, 'search' ])->middleware( middleware: 'auth')->name('search');
 
     Route::get('/users/{id}', [ UserController::class, 'show' ])->middleware( middleware: 'auth')->name('show');
 

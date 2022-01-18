@@ -8,7 +8,7 @@
                 </li>
             @if(Auth::check())
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('users') ? 'active' : ''  }}" aria-current="page" href="{{ route('user.users') }}">Пользователи</a>
+                    <a class="nav-link {{ request()->is('users') || request()->is('users/search') ? 'active' : ''  }}" aria-current="page" href="{{ route('user.users') }}">Пользователи</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
