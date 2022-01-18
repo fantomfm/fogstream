@@ -1,11 +1,24 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center">Проект решения задания для FOGSTREAM</p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## В приложении реализовано
+
+- Аутентификация пользователей с использованием middleware: 'auth'.
+
+- Регистрация новых пользователей.
+
+- Просмотр списка пользователей с поиском методом LIKE по имени или логину пользователя.
+
+- Разграничение прав с использованием Gate (как доступ к элементам представлений, так и к самим действиям).
+- Администратор имеет все права (удалять, изменять, создавать).
+- Менеджер может только изменять (менять роль запрещено).
+- бычный пользователь может только смотреть.
+- Каждый пользователь может изменять свою карточку (имя, логин и загружать фото).
+
+- В отдельной форме реализовано редактирование карточки пользователя с возможностью загрузки фотографии
+Изменение должности и отделений сотрудника переводит существующие записи в статус 0 для сохранения в БД, при этом создаются новые записи. Изменение фотографии также не удаляет старые записи, показывается последняя по дате. При удалении фотографии удаляется последняя запись и сама фотография из хранилища. При удалении пользователя удаляются все записи, связанные с ним и фотографии из хранилища.
+
+- В приложении используется последняя версия Bootstrap v5.1.3
+
 
 ## About Laravel
 

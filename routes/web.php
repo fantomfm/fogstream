@@ -24,10 +24,6 @@ Route::get('/', [ MainController::class, 'home' ])->name('home');
 Route::name('user.')->group(function(){
     Route::get('/users', [ UserController::class, 'users' ])->middleware( middleware: 'auth')->name('users');
 
-    // Route::post('/users', [ UserController::class, 'search' ])->middleware( middleware: 'auth');
-
-    // Route::get('/users/search', [ UserController::class, 'search' ])->middleware( middleware: 'auth')->name('search');
-
     Route::get('/users/{id}', [ UserController::class, 'show' ])->middleware( middleware: 'auth')->name('show');
 
     Route::get('/users/delete/{id}', [ DestroyController::class, 'delete' ])->middleware( middleware: 'auth')->name('delete');
@@ -35,6 +31,8 @@ Route::name('user.')->group(function(){
     Route::get('/users/deleteImage/{id}', [ DestroyController::class, 'deleteImage' ])->middleware( middleware: 'auth')->name('deleteImage');
 
     Route::get('/users/update/{id}', [ UpdateController::class, 'form' ])->middleware( middleware: 'auth')->name('update');
+
+    Route::post('/users/update/{id}', [ UpdateController::class, 'update' ])->middleware( middleware: 'auth');
 
     Route::get('/login', function(){
         if(Auth::check()){
@@ -58,6 +56,4 @@ Route::name('user.')->group(function(){
     })->name('registration');
 
     Route::post('/registration', [ RegistrationController::class, 'save' ]);
-
-    Route::post('/users/update/{id}', [ UpdateController::class, 'update' ])->middleware( middleware: 'auth');
 });
