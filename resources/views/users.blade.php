@@ -25,6 +25,7 @@
                 <th scope="col">Должность</th>
                 <th scope="col">Отдел</th>
                 <th scope="col">Роль</th>
+                <th scope="col">Дата регистрации</th>
                 <th scope="col">Действие</th>
             </tr>
             </thead>
@@ -42,6 +43,7 @@
                         <td>{{ implode(', ',array_column($user->positions->toArray(),'position')) }}</td>
                         <td>{!! implode('<br/>',array_column($user->departments->toArray(),'department')) !!}</td>
                         <td>{{ $user->role->role }}</td>
+                        <td>{{ $user->getDateRegistration() }}</td>
                         <td class="text-center"><a href="{{ route('user.show', $user->id) }}" class="btn btn-success btn-sm">Посмотреть</a></td>
                     </tr>
                 @endforeach
