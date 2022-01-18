@@ -21,9 +21,7 @@ class RegistrationController extends Controller
             'password' => ['required', 'confirmed'],
         ]);
 
-        $user = User::create($validateFields, [
-            'role_id' => 2,
-        ]);
+        $user = User::create($validateFields);
 
         $user->positionUser()->create([
             'position_id' => 1,

@@ -37,19 +37,25 @@ class TablesSeeder extends Seeder
         foreach (self::$roles as $role) {
             DB::table('roles')->insert([
                 'role' => $role,
-            ])->timestamps();
+                'created_at' =>  date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
         }
 
         foreach (self::$positions as $position) {
             DB::table('positions')->insert([
                 'position' => $position,
-            ])->timestamps();
+                'created_at' =>  date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
         }
 
         foreach (self::$departments as $department) {
             DB::table('departments')->insert([
                 'department' => $department,
-            ])->timestamps();
+                'created_at' =>  date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
         }
 
         DB::table('users')->insert([
@@ -57,6 +63,22 @@ class TablesSeeder extends Seeder
             'user' => 'admin',
             'password' => Hash::make('admin'),
             'role_id' => 1,
-        ])->timestamps();
+            'created_at' =>  date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('department_user')->insert([
+            'department_id' => 1,
+            'user_id' => 1,
+            'created_at' =>  date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('position_user')->insert([
+            'position_id' => 1,
+            'user_id' => 1,
+            'created_at' =>  date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 }

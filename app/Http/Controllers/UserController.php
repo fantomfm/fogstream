@@ -19,7 +19,7 @@ class UserController extends Controller
             ]);
             $search = $validateFields['search'];
             $users = User::where('name', 'LIKE', '%' . $search . '%')
-                // ->orWhere()
+                ->orWhere('user', 'LIKE', '%' . $search . '%')
                 ->paginate(20);
             $users->appends($request->all());
         } else {

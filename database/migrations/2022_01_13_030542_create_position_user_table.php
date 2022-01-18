@@ -29,6 +29,10 @@ class CreatePositionUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('position_user');
+        Schema::table('position_user', function (Blueprint $table) {
+            $table->dropForeign(['position_id']);
+            $table->dropForeign(['user_id']);
+            $table->drop('position_user');
+        });
     }
 }

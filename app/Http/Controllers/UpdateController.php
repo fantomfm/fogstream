@@ -41,6 +41,7 @@ class UpdateController extends Controller
 
         $user = User::findOrFail($id);
 
+        $rolesAll = Role::get();
         $positionsAll = Position::get();
         $departmentsAll = Department::get();
 
@@ -63,8 +64,11 @@ class UpdateController extends Controller
             $user->update(['user' => $request->user]);
         }
         
-        if ($request->role && $user->role_id != $request->role)
-            $user->update(['role_id' => $request->role]);
+        if ($request->role && $user->role_id != $request->role) {
+            if (in_array($request->role, array_column($rolesAll->toArray(),'id'))) {
+                $user->update(['role_id' => $request->role]);
+            }
+        }
 
         if ($position = $request->position) {
             if (in_array($position, array_column($positionsAll->toArray(),'id'))) {

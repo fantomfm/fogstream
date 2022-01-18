@@ -28,6 +28,10 @@ class CreatePictureUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('picture_user');
+        Schema::table('picture_user', function (Blueprint $table) {
+            $table->dropForeign(['picture_id']);
+            $table->dropForeign(['user_id']);
+            $table->drop('picture_user');
+        });
     }
 }

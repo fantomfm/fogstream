@@ -29,6 +29,10 @@ class CreateDepartmentUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('department_user');
+        Schema::table('department_user', function (Blueprint $table) {
+            $table->dropForeign(['department_id']);
+            $table->dropForeign(['user_id']);
+            $table->drop('department_user');
+        });
     }
 }
