@@ -1,0 +1,37 @@
+.form-center {
+  width:30%; 
+  margin:0 auto;
+}
+
+.pagination .page-link {
+    color: #198754;
+}
+
+.pagination .active .page-link {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
+}
+
+.shadow {
+    background-color: rgba(255, 255, 255, 0.212);
+}
+
+.card-user {
+    max-width: 900px;
+}
+
+.nav-item p {
+    padding: 0.5rem 1rem;
+}
+
+select option:focus {
+    background-color: rgba(25, 135, 84);
+}
+
+select option:checked {
+    background-color: rgba(25, 135, 84, 0.384);
+}
